@@ -1,35 +1,35 @@
-// src/components/InstallPrompt.tsx
 'use client';
 
 import React, { useEffect, useState } from 'react';
 
-// Define an interface for the beforeinstallprompt event
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
 }
 
-// Add proper type definitions
 interface INavigator extends Navigator {
   standalone?: boolean;
 }
 
-// Add at the top with other interfaces
 interface IWindow extends Window {
   MSStream?: any;
 }
 
-// Utility function to detect iOS devices
 function isIOS(): boolean {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as IWindow).MSStream;
+  if (typeof window !== 'undefined') {
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as IWindow).MSStream;
+  }
+  return false;
 }
 
-// Utility function to check if the app is already installed (standalone mode)
 function isInStandaloneMode(): boolean {
-  const nav = navigator as INavigator;
-  const isStandaloneIOS = nav.standalone === true;
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-  return isStandaloneIOS || isStandalone;
+  if (typeof window !== 'undefined') {
+    const nav = navigator as INavigator;
+    const isStandaloneIOS = nav.standalone === true;
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+    return isStandaloneIOS || isStandalone;
+  }
+  return false;
 }
 
 const InstallPrompt: React.FC = () => {
@@ -40,16 +40,18 @@ const InstallPrompt: React.FC = () => {
   useEffect(() => {
     setIsIosDevice(isIOS());
 
-    const handler = (e: Event) => {
-      e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
-      setShowPrompt(true);
-    };
+    if (typeof window !== 'undefined') {
+      const handler = (e: Event) => {
+        e.preventDefault();
+        setDeferredPrompt(e as BeforeInstallPromptEvent);
+        setShowPrompt(true);
+      };
 
-    window.addEventListener('beforeinstallprompt', handler);
-    return () => {
-      window.removeEventListener('beforeinstallprompt', handler);
-    };
+      window.addEventListener('beforeinstallprompt', handler);
+      return () => {
+        window.removeEventListener('beforeinstallprompt', handler);
+      };
+    }
   }, []);
 
   if (isInStandaloneMode()) return null;
