@@ -43,6 +43,9 @@ const InstallPrompt: React.FC = () => {
     if (typeof window !== 'undefined') {
       const handler = (e: Event) => {
         e.preventDefault();
+
+        console.log("beforeinstallprompt event fired");
+
         setDeferredPrompt(e as BeforeInstallPromptEvent);
         setShowPrompt(true);
       };
