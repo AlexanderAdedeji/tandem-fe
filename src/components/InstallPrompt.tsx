@@ -91,7 +91,7 @@ const InstallPrompt: React.FC = () => {
         position: "fixed",
         bottom: "1rem",
         right: "1rem",
-        background: "#fff",
+        background: "#000",
         border: "1px solid #ddd",
         padding: "1rem",
         borderRadius: "8px",
