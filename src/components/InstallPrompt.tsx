@@ -3,53 +3,62 @@
 
 import React, { useEffect, useState } from 'react';
 
-// Utility function to detect iOS devices
-function isIOS(): boolean {
-  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+// Define an interface for the beforeinstallprompt event
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
 }
 
-// Utility function to check if app is already installed
+// Add proper type definitions
+interface INavigator extends Navigator {
+  standalone?: boolean;
+}
+
+// Add at the top with other interfaces
+interface IWindow extends Window {
+  MSStream?: any;
+}
+
+// Utility function to detect iOS devices
+function isIOS(): boolean {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as IWindow).MSStream;
+}
+
+// Utility function to check if the app is already installed (standalone mode)
 function isInStandaloneMode(): boolean {
-  return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone;
+  const nav = navigator as INavigator;
+  const isStandaloneIOS = nav.standalone === true;
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
+  return isStandaloneIOS || isStandalone;
 }
 
 const InstallPrompt: React.FC = () => {
-  // Holds the beforeinstallprompt event for Android and other browsers
-  const [deferredPrompt, setDeferredPrompt] = useState<Event | null>(null);
-  // Whether to show the custom install UI
-  const [showPrompt, setShowPrompt] = useState(false);
-  // Detect if the device is iOS
-  const [isIosDevice, setIsIosDevice] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+  const [showPrompt, setShowPrompt] = useState<boolean>(false);
+  const [isIosDevice, setIsIosDevice] = useState<boolean>(false);
 
   useEffect(() => {
     setIsIosDevice(isIOS());
 
-    const handleBeforeInstallPrompt = (e: Event) => {
-      // Prevent the mini-infobar from showing
+    const handler = (e: Event) => {
       e.preventDefault();
-      // Save the event for triggering later
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
       setShowPrompt(true);
     };
 
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
-
-    // Clean up the event listener on unmount
+    window.addEventListener('beforeinstallprompt', handler);
     return () => {
-      window.removeEventListener('beforeinstallprompt', handleBeforeInstallPrompt);
+      window.removeEventListener('beforeinstallprompt', handler);
     };
   }, []);
 
-  // If in standalone mode, no need to prompt
-  const isInstalled = isInStandaloneMode();
-  if (isInstalled) return null;
+  if (isInStandaloneMode()) return null;
 
-  // Function to handle the install prompt on Android/other browsers
   const handleInstallClick = async () => {
     if (!deferredPrompt) return;
     try {
-      (deferredPrompt as any).prompt();
-      const choiceResult = await (deferredPrompt as any).userChoice;
+      await deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
       if (choiceResult.outcome === 'accepted') {
         console.info('User accepted the install prompt');
       } else {
@@ -58,20 +67,20 @@ const InstallPrompt: React.FC = () => {
     } catch (error) {
       console.error('Error during install prompt:', error);
     } finally {
-      // Clear the saved prompt
       setDeferredPrompt(null);
       setShowPrompt(false);
     }
   };
 
-  // Render custom UI based on platform
+  if (!showPrompt) return null;
+
   return (
     <div
       style={{
         position: 'fixed',
         bottom: '1rem',
         right: '1rem',
-        background: '#ffffff',
+        background: '#fff',
         border: '1px solid #ddd',
         padding: '1rem',
         borderRadius: '8px',
@@ -85,7 +94,7 @@ const InstallPrompt: React.FC = () => {
             For the best experience, add Tandem to your Home Screen.
           </p>
           <p style={{ fontSize: '0.9rem', color: '#555' }}>
-            Tap the Share icon in Safari and then select "Add to Home Screen".
+            Tap the Share icon in Safari and then select &quot;Add to Home Screen&quot;.
           </p>
         </div>
       ) : (
