@@ -1,6 +1,8 @@
+'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Google, Apple } from 'lucide-react'
+import { Linkedin, Apple } from 'lucide-react'
+import { Button } from '@/components/ui/button'
 
 interface OAuthButtonProps {
   provider: 'google' | 'apple'
@@ -24,8 +26,12 @@ export const OAuthButton: React.FC<OAuthButtonProps> = ({ provider, label }) => 
         backgroundColor: provider === 'google' ? '#4285F4' : '#000',
       }}
     >
-      {provider === 'google' ? <Google className="mr-2" /> : <Apple className="mr-2" />}
-      {label}
-    </motion.button>
+
+ 
+              {provider === 'google' ? <Linkedin className="mr-2" /> : <Apple className="mr-2" />}
+              {label}
+   
+
+     </motion.button>
   )
 }

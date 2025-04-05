@@ -1,5 +1,7 @@
+'use client'
+
 import React from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 // import { useLogin } from '../../../lib/hooks/useAuth'
 import AuthLayout from '../layout'
 import { LoginForm } from '../components/forms/login-form'
@@ -8,7 +10,7 @@ import { OAuthButton } from '../components/oauth-buttons'
 // import { OAuthButton } from '../../../components/OAuthButton'
 
 const LoginPage: React.FC = () => {
-  const router = useRouter()
+  // const router = useRouter()
   // const { mutate: login, isLoading } = useLogin()
 
   const handleLogin = (email: string, password: string) => {

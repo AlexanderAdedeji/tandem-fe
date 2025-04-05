@@ -1,7 +1,8 @@
+'use client'
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ArrowLeft } from 'lucide-react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 interface AuthLayoutProps {
   children: React.ReactNode
@@ -18,7 +19,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
   showBackButton = true,
   illustration,
 }) => {
-  const router = useRouter()
+  // const router = useRouter()
   return (
     <div className="min-h-screen bg-white dark:bg-[#1A1B25] flex">
       {/* Left Panel - Illustration */}
@@ -38,7 +39,7 @@ const AuthLayout: React.FC<AuthLayoutProps> = ({
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onClick={() => router.back()}
+            // onClick={() => router.back()}
             className="self-start p-2 rounded-full bg-gray-100 dark:bg-gray-800 mb-8"
           >
             <ArrowLeft size={20} className="text-gray-600 dark:text-gray-300" />

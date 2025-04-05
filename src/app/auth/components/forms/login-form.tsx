@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Mail, Lock, Eye, EyeOff, Loader } from 'lucide-react'
@@ -49,9 +51,9 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading }) => 
               Password
             </label>
             <Link href="/auth/forgot-password">
-              <a className="text-sm text-[#5855FF] dark:text-[#FF914D] hover:underline">
+              <span className="text-sm text-[#5855FF] dark:text-[#FF914D] hover:underline">
                 Forgot password?
-              </a>
+              </span>
             </Link>
           </div>
           <div className="relative">
@@ -84,7 +86,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({ onSubmit, isLoading }) => 
       <p className="text-center text-gray-600 dark:text-gray-400">
         Don't have an account?
         <Link href="/auth/register">
-          <a className="text-[#5855FF] dark:text-[#FF914D] hover:underline">Sign up</a>
+          <span className="text-[#5855FF] dark:text-[#FF914D] hover:underline">Sign up</span>
         </Link>
       </p>
     </motion.form>
