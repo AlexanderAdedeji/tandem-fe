@@ -1,40 +1,29 @@
-'use client'
+"use client"
 
-import React from 'react'
-// import { useRouter } from 'next/router'
-// import { useLogin } from '../../../lib/hooks/useAuth'
-import AuthLayout from '../layout'
-import { LoginForm } from '../components/forms/login-form'
-import { OAuthButton } from '../components/oauth-buttons'
+import React from "react"
+import { useRouter } from "next/navigation"
+import AuthLayout from "../layout"
+import { LoginForm } from "../components/forms/login-form"
 
-// import { OAuthButton } from '../../../components/OAuthButton'
 
-const LoginPage: React.FC = () => {
-  // const router = useRouter()
-  // const { mutate: login, isLoading } = useLogin()
+export default function LoginPage() {
+  const router = useRouter()
 
   const handleLogin = (email: string, password: string) => {
-    // login({ email, password }, {
-    //   onSuccess: () => router.push('/lists'),
-    //   onError: (error) => alert('Login failed: ' + error),
-    // })
+    // Handle login (e.g., call your API, update state)
   }
 
   return (
-    <AuthLayout
-      title="Welcome Back"
-      subtitle="Sign in to your account"
-      illustration="/icons/auth-illustration.svg"
-    >
-      <div className="space-y-6">
-        <LoginForm onSubmit={handleLogin} isLoading={false} />
-        <div className="flex flex-col space-y-4 mt-4">
-          <OAuthButton provider="google" label="Sign in with Google" />
-          <OAuthButton provider="apple" label="Sign in with Apple" />
-        </div>
+    <AuthLayout>
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
+          Welcome Back
+        </h1>
+        <p className="text-gray-600 dark:text-gray-300">
+          Sign in to your account
+        </p>
       </div>
+      <LoginForm onSubmit={handleLogin} isLoading={false} />
     </AuthLayout>
   )
 }
-
-export default LoginPage
