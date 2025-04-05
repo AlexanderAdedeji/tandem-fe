@@ -14,8 +14,10 @@ export default function LoginPage() {
   }
 
   return (
-    <AuthLayout>
-      <div className="mb-8">
+    // <AuthLayout>
+    <>
+    
+    <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2 text-gray-900 dark:text-white">
           Welcome Back
         </h1>
@@ -24,6 +26,8 @@ export default function LoginPage() {
         </p>
       </div>
       <LoginForm onSubmit={handleLogin} isLoading={false} />
-    </AuthLayout>
+    </>
+
+    // </AuthLayout>
   )
 }

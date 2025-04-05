@@ -20,7 +20,7 @@ const setIsDarkMode = false
   const [currentSlide, setCurrentSlide] = useState(0)
   const slides = [
     {
-      title: 'Welcome to Flocksy',
+      title: 'Welcome to Tandem',
       description:
         'Create and manage lists with friends and family in real-time.',
       illustration:
