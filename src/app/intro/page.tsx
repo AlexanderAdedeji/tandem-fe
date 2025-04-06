@@ -64,7 +64,7 @@ const IntroScreens: React.FC = () => {
   const completeIntro = () => {
     localStorage.setItem('hasSeenIntro', 'true')
     setHasSeenIntro(true)
-    router.push('/auth/login')
+    router.push('/auth/signup')
   }
   const handleDragEnd = (
     event: MouseEvent | TouchEvent | PointerEvent,
