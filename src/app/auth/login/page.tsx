@@ -4,17 +4,27 @@ import React from "react"
 import { useRouter } from "next/navigation"
 import AuthLayout from "../layout"
 import { LoginForm } from "../components/forms/login-form"
+import { useAuth } from "../hooks/useAuth"
 
 
 export default function LoginPage() {
   const router = useRouter()
 
-  const handleLogin = (email: string, password: string) => {
-    // Handle login (e.g., call your API, update state)
+
+  const { login, isLoggingIn, loginError } = useAuth();
+
+  const handleLogin = async (email: string, password: string) => {
+    try {
+      await login({ email, password });
+      // Successful login will automatically redirect to dashboard via useAuth hook
+    } catch (error) {
+      console.error('Login failed:', error);
+      // Error handling is managed by the mutation in useAuth
+    }
   }
 
   return (
-    // <AuthLayout>
+   
     <>
     
     <div className="mb-8">
@@ -28,6 +38,6 @@ export default function LoginPage() {
       <LoginForm onSubmit={handleLogin} isLoading={false} />
     </>
 
-    // </AuthLayout>
+
   )
 }

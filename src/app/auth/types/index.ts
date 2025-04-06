@@ -46,7 +46,7 @@ export const signupSchema = emailSchema.extend({
 
 export type LoginSchemaInterface = z.infer<typeof loginSchema>
 export type EmailSchemaInterface = z.infer<typeof emailSchema>
-export type SignupSchemaInterface = z.infer<typeof signupSchema>
+export type SignUpSchemaInterface = z.infer<typeof signupSchema>
 
 
 

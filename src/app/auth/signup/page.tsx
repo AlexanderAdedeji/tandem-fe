@@ -3,9 +3,28 @@
 import React from "react"
 import { motion } from "framer-motion"
 import SignUpForm from "../components/forms/sign-up-form"
+import { useAuth } from "../hooks/useAuth";
 
 
 export default function SignUpPage() {
+
+
+  const { register, isRegistering, registerError } = useAuth();
+
+  const handleSignUp = async (formData: {
+    email: string;
+    password: string;
+    first_name: string;
+    last_name: string;
+  }) => {
+    try {
+      await register(formData);
+      // Successful registration will automatically redirect to dashboard via useAuth hook
+    } catch (error) {
+      console.error('Registration failed:', error);
+      // Error handling is managed by the mutation in useAuth
+    }
+  };
   return (
     <>
       <motion.h1
