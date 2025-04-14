@@ -13,7 +13,7 @@ interface GoalStep {
   isAiGenerated?: boolean
 }
 
-export default function Page() {
+export default function GoalPage() {
   const [steps, setSteps] = useState<GoalStep[]>([
     {
       id: uuid(),

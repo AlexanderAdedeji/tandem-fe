@@ -18,7 +18,7 @@ interface RegistryItem {
   affiliateLink?: string;
 }
 
-export default function Page() {
+export default function RegistryPage() {
   const [items, setItems] = useState<RegistryItem[]>([
     {
       id: uuid(),

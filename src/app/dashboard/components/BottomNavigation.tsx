@@ -30,7 +30,7 @@ export const BottomNavigation: React.FC = () => {
         </button>
 
         <button
-          onClick={() => router.push('/create-list')}
+          onClick={() => router.push('/lists')}
           className="flex flex-col items-center justify-center px-4 py-2 text-gray-500 dark:text-gray-400"
         >
           <div className="w-12 h-12 bg-[#5855FF] dark:bg-[#FF914D] rounded-full flex items-center justify-center text-white -mt-8 shadow-md">

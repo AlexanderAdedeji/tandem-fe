@@ -13,7 +13,7 @@ interface EventItem {
   links?: Array<{url: string, title: string, type: 'ticket' | 'directions' | 'registration' | 'info'}>;
 }
 
-const Page: React.FC = () => {
+const EventPage: React.FC = () => {
   const [items, setItems] = useState<EventItem[]>([
     {
       id: '1',
@@ -36,4 +36,4 @@ const Page: React.FC = () => {
   return <EventList items={items} onUpdateItems={setItems} />
 }
 
-export default Page
+export default  EventPage

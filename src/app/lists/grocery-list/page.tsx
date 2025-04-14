@@ -16,7 +16,7 @@ interface GroceryItem {
   affiliateLink?: string;
 }
 
-export default function Page() {
+export default function GroceryPage() {
   const [items, setItems] = useState<GroceryItem[]>([
     {
       id: uuid(),
