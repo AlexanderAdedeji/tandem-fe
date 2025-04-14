@@ -96,7 +96,7 @@ const CreateList: React.FC = () => {
       updatedAt: new Date().toISOString(),
     }
     addList(newList)
-    router.push(`/list/${newList.id}-list`)
+    router.push(`/lists/${newList.id}`)
   }
   return (
     <div className="min-h-screen bg-[#F7F8FA] dark:bg-[#1A1B25] p-6">
