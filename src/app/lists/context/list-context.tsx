@@ -45,6 +45,7 @@ interface ListContextType {
   archiveList: (id: string) => void
   unarchiveList: (id: string) => void
   getArchivedLists: () => List[]
+  addItem: (listId: string, item: Omit<ListItem, 'id'>) => void
 }
 const ListContext = React.createContext<ListContextType>({
   lists: [],
@@ -57,6 +58,7 @@ const ListContext = React.createContext<ListContextType>({
   archiveList: () => {},
   unarchiveList: () => {},
   getArchivedLists: () => [],
+  addItem: () => {},
 })
 export const useList = () => React.useContext(ListContext)
 export const ListProvider: React.FC<{
@@ -64,6 +66,7 @@ export const ListProvider: React.FC<{
 }> = ({ children }) => {
   const [lists, setLists] = useState<List[]>([])
   const [listItems, setListItems] = useState<Record<string, ListItem[]>>({})
+  
   const addList = (list: List) => {
     setLists([...lists, list])
     setListItems({
@@ -71,6 +74,7 @@ export const ListProvider: React.FC<{
       [list.id]: [],
     })
   }
+  
   const deleteList = (id: string) => {
     setLists(lists.filter((list) => list.id !== id))
     const newListItems = {
@@ -79,9 +83,11 @@ export const ListProvider: React.FC<{
     delete newListItems[id]
     setListItems(newListItems)
   }
+  
   const getListById = (id: string) => {
     return lists.find((list) => list.id === id)
   }
+  
   const updateListCollaborators = (id: string, count: number) => {
     setLists(
       lists.map((list) =>
@@ -94,6 +100,7 @@ export const ListProvider: React.FC<{
       ),
     )
   }
+  
   const updateListItems = (listId: string, items: ListItem[]) => {
     setListItems({
       ...listItems,
@@ -105,14 +112,17 @@ export const ListProvider: React.FC<{
           ? {
               ...list,
               itemCount: items.length,
+              updatedAt: new Date().toISOString(),
             }
           : list,
       ),
     )
   }
+  
   const getListItems = (listId: string) => {
     return listItems[listId] || []
   }
+  
   const archiveList = (id: string) => {
     setLists(
       lists.map((list) =>
@@ -126,6 +136,7 @@ export const ListProvider: React.FC<{
       ),
     )
   }
+  
   const unarchiveList = (id: string) => {
     setLists(
       lists.map((list) =>
@@ -139,31 +150,40 @@ export const ListProvider: React.FC<{
       ),
     )
   }
+  
   const getArchivedLists = () => {
     return lists.filter((list) => list.archived)
   }
+  
   const addItem = (listId: string, item: Omit<ListItem, 'id'>) => {
     const newItem = {
       ...item,
-      id: Date.now().toString(),
+      id: Date.now().toString() + Math.random().toString(36).substring(2, 9),
     };
     
-    setListItems((prevListItems) => ({
-      ...prevListItems,
-      [listId]: [...(prevListItems[listId] || []), newItem],
-    }));
-    
-    setLists((prevLists) =>
-      prevLists.map((list) =>
-        list.id === listId
-          ? {
-              ...list,
-              itemCount: (listItems[listId]?.length || 0) + 1,
-            }
-          : list,
-      ),
-    );
+    setListItems((prevListItems) => {
+      const updatedItems = {
+        ...prevListItems,
+        [listId]: [...(prevListItems[listId] || []), newItem],
+      };
+      
+      // Update lists with the new item count
+      setLists((prevLists) =>
+        prevLists.map((list) =>
+          list.id === listId
+            ? {
+                ...list,
+                itemCount: updatedItems[listId].length,
+                updatedAt: new Date().toISOString(),
+              }
+            : list,
+        ),
+      );
+      
+      return updatedItems;
+    });
   };
+  
   return (
     <ListContext.Provider
       value={{
@@ -177,6 +197,7 @@ export const ListProvider: React.FC<{
         archiveList,
         unarchiveList,
         getArchivedLists,
+        addItem,
       }}
     >
       {children}

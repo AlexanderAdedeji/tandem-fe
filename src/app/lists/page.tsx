@@ -73,15 +73,21 @@ const CreateList: React.FC = () => {
   const [selectedType, setSelectedType] = useState<string | null>(null)
   const [title, setTitle] = useState('')
   const [showForm, setShowForm] = useState(false)
+  
   const handleSelectType = (typeId: string) => {
     setSelectedType(typeId)
     setShowForm(true)
   }
+  
   const handleCreateList = (e: React.FormEvent) => {
     e.preventDefault()
     if (!selectedType || !title.trim()) return
+    
+    // Generate a unique ID for the list
+    const listId = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+    
     const newList = {
-      id: Date.now().toString(),
+      id: listId,
       title: title.trim(),
       type: selectedType as
         | 'grocery'
@@ -95,9 +101,14 @@ const CreateList: React.FC = () => {
       collaborators: 0,
       updatedAt: new Date().toISOString(),
     }
+    
+    // Add the list to the context
     addList(newList)
-    router.push(`/lists/${newList.id}`)
+    
+    // Navigate to the list detail page
+    router.push(`/lists/${listId}`)
   }
+  
   return (
     <div className="min-h-screen bg-[#F7F8FA] dark:bg-[#1A1B25] p-6">
       <div className="max-w-2xl mx-auto">

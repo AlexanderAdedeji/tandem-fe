@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { useRouter, useParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import {
   ArrowLeft,
   MoreVertical,
@@ -52,20 +52,22 @@ interface RegistryItem extends ListItem {
   }
   purchased: boolean
 }
-export const ListDetail: React.FC = () => {
+
+interface ListDetailProps {
+  listId: string;
+}
+
+export const ListDetail: React.FC<ListDetailProps> = ({ listId }) => {
   const router = useRouter()
-  const params = useParams<{
-    id: string
-  }>()
-  const id = params?.id
   const {
     getListById,
     deleteList,
     getListItems,
     updateListItems,
     archiveList,
+    addItem,
   } = useList()
-  const list = getListById(id || '')
+  const list = getListById(listId)
   const [items, setItems] = useState<ListItem[]>([])
   const [newItem, setNewItem] = useState('')
   const [showMenu, setShowMenu] = useState(false)
@@ -108,73 +110,18 @@ export const ListDetail: React.FC = () => {
   }
   const handleUpdateItems = (newItems: ListItem[]) => {
     setItems(newItems)
-    updateListItems(id!, newItems)
+    updateListItems(listId, newItems)
   }
   const renderList = () => {
     switch (list?.type) {
       case 'event':
-        return (
-
-            <EventPage/>
-        //   <EventList
-        //     items={items.map((item) => ({
-        //       id: item.id,
-        //       content: item.content,
-        //       description: item.description,
-        //       completed: item.completed,
-        //       time: item.time,
-        //       location: item.location,
-        //       attendees: item.attendees,
-        //       links: item.links,
-        //       virtualMeetingUrl: item.virtualMeetingUrl,
-        //     }))}
-        //     onUpdateItems={handleUpdateItems}
-        //   />
-        )
+        return <EventPage />
       case 'registry':
-        return (
-
-            <RegistryPage/>
-        //   <RegistryList
-        //     items={items as RegistryItem[]}
-        //     onClaimItem={handleClaimItem}
-        //     onUnclaimItem={handleUnclaimItem}
-        //     onMarkPurchased={handleToggleComplete}
-        //     onAddItems={handleAddItems}
-        //     registryTitle={list.title}
-        //   />
-        )
+        return <RegistryPage />
       case 'goal':
-        return (
-
-            <GoalPage/>
-        //   <GoalList
-        //     goal={list.title}
-        //     targetDate={list.targetDate || ''}
-        //     steps={items.map((item) => ({
-        //       ...item,
-        //       content: item.content,
-        //       completed: item.completed,
-        //       dueDate: item.dueDate,
-        //     }))}
-        //     onUpdateSteps={handleUpdateItems}
-        //     onGenerateSteps={async () => {
-        //       // AI generation would go here
-        //     }}
-        //   />
-        )
+        return <GoalPage />
       case 'grocery':
-        return (
-
-            <GroceryPage/>
-        //   <GroceryList items={items as any} onUpdateItems={handleUpdateItems} />
-        )
-    //   case 'tasks':
-    //     return (
-
-    //         <TaskPage/>
-    //     //   <TaskList items={items as any} onUpdateItems={handleUpdateItems} />
-    //     )
+        return <GroceryPage />
       default:
         return (
           <div className="bg-white dark:bg-[#2B2C5D] rounded-lg overflow-hidden">
@@ -190,11 +137,11 @@ export const ListDetail: React.FC = () => {
     }
   }
   useEffect(() => {
-    if (id) {
-      const listItems = getListItems(id)
+    if (listId) {
+      const listItems = getListItems(listId)
       setItems(listItems)
     }
-  }, [id])
+  }, [listId, getListItems])
   const handleToggleComplete = (itemId: string) => {
     const newItems = items.map((item) =>
       item.id === itemId
@@ -205,7 +152,7 @@ export const ListDetail: React.FC = () => {
         : item,
     )
     setItems(newItems)
-    updateListItems(id!, newItems)
+    updateListItems(listId, newItems)
   }
   const handleClaimItem = (itemId: string) => {
     const newItems = items.map((item) =>
@@ -220,7 +167,7 @@ export const ListDetail: React.FC = () => {
         : item,
     ) as RegistryItem[]
     setItems(newItems)
-    updateListItems(id!, newItems)
+    updateListItems(listId, newItems)
   }
   const handleUnclaimItem = (itemId: string) => {
     const newItems = items.map((item) =>
@@ -232,61 +179,52 @@ export const ListDetail: React.FC = () => {
         : item,
     ) as RegistryItem[]
     setItems(newItems)
-    updateListItems(id!, newItems)
+    updateListItems(listId, newItems)
   }
   const handleAddItem = () => {
-    if (!newItem) return
-    if (list?.type === 'registry') {
-      const newRegistryItem: RegistryItem = {
-        id: Date.now().toString(),
-        content: newItem,
-        name: newItem,
-        completed: false,
-        purchased: false,
-        description: '',
-        price: '',
+    if (!newItem || !list) return;
+    
+    try {
+      if (list.type === 'registry') {
+        const newRegistryItem: Omit<RegistryItem, 'id'> = {
+          content: newItem,
+          name: newItem,
+          completed: false,
+          purchased: false,
+          description: '',
+          price: '',
+        };
+        addItem(list.id, newRegistryItem);
+      } else {
+        const newListItem: Omit<ListItem, 'id'> = {
+          content: newItem,
+          completed: false,
+          ...(list.type === 'grocery' ? { quantity: 1 } : {}),
+          ...(list.type === 'tasks' ? { dueDate: '' } : {}),
+        };
+        addItem(list.id, newListItem);
       }
-      setItems([...items, newRegistryItem])
-      updateListItems(id!, [...items, newRegistryItem])
-    } else {
-      const newListItem: ListItem = {
-        id: Date.now().toString(),
-        content: newItem,
-        completed: false,
-        ...(list?.type === 'grocery'
-          ? {
-              quantity: 1,
-            }
-          : {}),
-        ...(list?.type === 'tasks'
-          ? {
-              dueDate: '',
-            }
-          : {}),
-        ...(list?.type === 'registry' as any
-          ? {
-              price: '',
-              description: '',
-            }
-          : {}),
-      }
-      const newItems = [...items, newListItem]
-      setItems(newItems)
-      updateListItems(id!, newItems)
-      setNewItem('')
+      
+      // Update local items state
+      const updatedItems = getListItems(list.id);
+      setItems(updatedItems);
+      
+      setNewItem('');
+    } catch (error) {
+      console.error('Error adding item:', error);
     }
-  }
+  };
   const handleDeleteItem = (itemId: string) => {
     const newItems = items.filter((item) => item.id !== itemId)
     setItems(newItems)
-    updateListItems(id!, newItems)
+    updateListItems(listId, newItems)
   }
   const handleUpdateItem = (updatedItem: ListItem) => {
     const newItems = items.map((item) =>
       item.id === updatedItem.id ? updatedItem : item,
     )
     setItems(newItems)
-    updateListItems(id!, newItems)
+    updateListItems(listId, newItems)
   }
   const renderItem = (item: ListItem) => (
     <motion.div
@@ -332,7 +270,7 @@ export const ListDetail: React.FC = () => {
                 : i,
             )
             setItems(newItems)
-            updateListItems(id!, newItems)
+            updateListItems(listId, newItems)
           }}
           className="text-sm p-1 rounded border dark:border-gray-700 bg-transparent"
         />
@@ -382,11 +320,11 @@ export const ListDetail: React.FC = () => {
     }))
     const updatedItems = [...items, ...itemsToAdd]
     setItems(updatedItems)
-    updateListItems(id!, updatedItems)
+    updateListItems(listId, updatedItems)
   }
   const handleDeleteList = () => {
-    if (id) {
-      deleteList(id)
+    if (listId) {
+      deleteList(listId)
       router.push('/dashboard')
     }
   }
@@ -436,7 +374,7 @@ export const ListDetail: React.FC = () => {
           {showMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#2B2C5D] rounded-lg shadow-lg overflow-hidden z-10">
               <button
-                onClick={() => router.push(`/list/${id}/invite`)}
+                onClick={() => router.push(`/list/${listId}/invite`)}
                 className="w-full flex items-center p-3 text-left hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <Users
@@ -449,8 +387,8 @@ export const ListDetail: React.FC = () => {
               </button>
               <button
                 onClick={() => {
-                  if (id) {
-                    archiveList(id)
+                  if (listId) {
+                    archiveList(listId)
                     router.push('/dashboard')
                   }
                 }}
@@ -461,8 +399,8 @@ export const ListDetail: React.FC = () => {
               </button>
               <button
                 onClick={() => {
-                  if (id) {
-                    deleteList(id)
+                  if (listId) {
+                    deleteList(listId)
                     router.push('/dashboard')
                   }
                 }}
@@ -532,7 +470,7 @@ export const ListDetail: React.FC = () => {
             onKeyDown={(e) => e.key === 'Enter' && handleAddItem()}
           />
           <button
-            onClick={handleAddItem}
+            onClick={() => handleAddItem()}
             disabled={!newItem}
             className={`px-4 rounded-r-lg font-medium ${newItem ? 'bg-[#5855FF] dark:bg-[#FF914D] text-white' : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500'}`}
           >
@@ -541,7 +479,7 @@ export const ListDetail: React.FC = () => {
         </div>
       </div>
       {/* <ChatSection
-        listId={id || ''}
+        listId={listId || ''}
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}
       /> */}

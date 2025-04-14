@@ -1,7 +1,9 @@
 'use client'
 
-import React, { useState } from 'react'
-import EventList from './EventList' // adjust if needed
+import React, { useState, useEffect } from 'react'
+import EventList from './EventList'
+import { useList } from '../context/list-context'
+import { useParams } from 'next/navigation'
 
 interface EventItem {
   id: string;
@@ -14,26 +16,26 @@ interface EventItem {
 }
 
 const EventPage: React.FC = () => {
-  const [items, setItems] = useState<EventItem[]>([
-    {
-      id: '1',
-      content: 'Book venue', 
-      completed: false,
-      time: '10:00 AM',
-      location: 'Downtown Hall',
-      attendees: 20,
-      links: [{ url: 'https://event.com/tickets', title: 'Buy Tickets', type: 'ticket' }],
-    },
-    {
-      id: '2',
-      content: 'Send invitations',
-      completed: true,
-      time: '12:00 PM',
-      attendees: 30,
-    },
-  ])
+  const params = useParams();
+  const { getListItems, updateListItems } = useList();
+  const [items, setItems] = useState<EventItem[]>([]);
+  
+  useEffect(() => {
+    if (params?.listId) {
+      const listId = params.listId as string;
+      const listItems = getListItems(listId);
+      setItems(listItems as EventItem[]);
+    }
+  }, [params?.listId, getListItems]);
+  
+  const handleUpdateItems = (newItems: EventItem[]) => {
+    setItems(newItems);
+    if (params?.listId) {
+      updateListItems(params.listId as string, newItems);
+    }
+  };
 
-  return <EventList items={items} onUpdateItems={setItems} />
+  return <EventList items={items} onUpdateItems={handleUpdateItems} />
 }
 
-export default  EventPage
+export default EventPage
