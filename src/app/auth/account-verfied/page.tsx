@@ -4,7 +4,7 @@ import React from 'react'
 import { motion } from 'framer-motion'
 import { useRouter } from 'next/router'
 import { CheckCircle, ArrowRight } from 'lucide-react'
-export const AccountVerifiedScreen: React.FC = () => {
+const AccountVerifiedScreen: React.FC = () => {
   const router = useRouter()
   return (
     <div className="min-h-screen bg-gradient-to-b from-white to-gray-50 dark:from-[#1A1B25] dark:to-[#2B2C5D] flex items-center justify-center p-4">
@@ -148,3 +148,7 @@ export const AccountVerifiedScreen: React.FC = () => {
     </div>
   )
 }
+
+
+
+export default AccountVerifiedScreen
