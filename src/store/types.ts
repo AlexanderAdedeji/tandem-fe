@@ -1,9 +1,9 @@
-import { AuthState } from './slices/authSlice';
-import { ListState } from './slices/listSlice';
+import { AuthStateType } from "./slices/authSlice";
+import { ListStateType } from "./slices/listSlice";
 
 export interface RootState {
-  auth: AuthState;
-  list: ListState;
+  auth: AuthStateType;
+  list: ListStateType;
 }
 
 // Store selectors
@@ -11,9 +11,9 @@ export const selectAuth = (state: RootState) => state.auth;
 export const selectList = (state: RootState) => state.list;
 
 // Auth selectors
-export const selectUser = (state: RootState) => state.auth.user;
-export const selectIsAuthenticated = (state: RootState) => state.auth.isAuthenticated;
-export const selectToken = (state: RootState) => state.auth.token;
+export const selectAuthDetails = (state: RootState) => state.auth.authDetails;
+export const selectIsLoggedIn = (state: RootState) => state.auth.loggedIn;
+export const selectAuthLoading = (state: RootState) => state.auth.authLoading;
 
 // List selectors
 export const selectItems = (state: RootState) => state.list.items;

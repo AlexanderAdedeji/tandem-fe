@@ -12,7 +12,7 @@ const SplashScreen: React.FC = () => {
     }, 500);
     router.push("/intro");
     return () => clearTimeout(timer);
-  }, []);
+  }, [router]);
   return (
     <div className="fixed inset-0 bg-gradient-to-br from-[#5855FF] to-[#2B2C5D] flex items-center justify-center">
       <motion.div

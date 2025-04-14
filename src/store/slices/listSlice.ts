@@ -9,7 +9,7 @@ export interface ListItem {
   updatedAt: string;
 }
 
-interface ListState {
+export interface ListStateType {
   items: ListItem[];
   isLoading: boolean;
   error: string | null;
@@ -23,7 +23,7 @@ interface ListState {
   setError: (error: string | null) => void;
 }
 
-export const useListStore = create<ListState>()((set) => ({
+export const useListStore = create<ListStateType>()((set) => ({
   items: [],
   isLoading: false,
   error: null,

@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 import { CheckCircle, ArrowRight } from 'lucide-react'
 const AccountVerifiedScreen: React.FC = () => {
   const router = useRouter()
@@ -38,11 +38,11 @@ const AccountVerifiedScreen: React.FC = () => {
             }}
             className="relative z-10"
           >
-            <img
+            {/* <img
               src="https://illustrations.popsy.co/white/success.svg"
               alt="Success illustration"
               className="w-64 h-64 mx-auto"
-            />
+            /> */}
           </motion.div>
           <motion.div
             initial={{
