@@ -16,7 +16,7 @@ export default function LoginPage() {
   const handleLogin = async (email: string, password: string) => {
     try {
       await login({ email, password });
-      // Successful login will automatically redirect to dashboard via useAuth hook
+      
     } catch (error) {
       console.error('Login failed:', error);
       // Error handling is managed by the mutation in useAuth
