@@ -49,7 +49,7 @@ const Dashboard: React.FC = () => {
               <ListCard
                 key={list.id}
                 list={list}
-                onClick={() => router.push(`/list/${list.id}`)}
+                onClick={() => router.push(`/lists/${list.id}`)}
               />
             ))}
           </div>
