@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
@@ -28,7 +29,7 @@ interface EventListProps {
   items: EventItem[]
   onUpdateItems: (items: EventItem[]) => void
 }
-export const EventList: React.FC<EventListProps> = ({
+ const EventList: React.FC<EventListProps> = ({
   items,
   onUpdateItems,
 }) => {
@@ -164,3 +165,7 @@ export const EventList: React.FC<EventListProps> = ({
     </div>
   )
 }
+
+
+
+export default EventList
