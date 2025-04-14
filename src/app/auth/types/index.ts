@@ -33,10 +33,10 @@ export const signupSchema = emailSchema.extend({
     password: passwordValidationSchema,
     first_name: z.string().min(3).max(100),
     last_name: z.string().min(3).max(100),
-    confirmPassword: z.string(),
-}).refine((data) => data.password === data.confirmPassword, {
+    confirm_password: z.string(),
+}).refine((data) => data.password === data.confirm_password, {
     message: "Passwords must match",
-    path: ["confirmPassword"],
+    path: ["confirm_password"],
 });
 
 

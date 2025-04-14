@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useAuthStore } from '@/store/slices/authSlice';
+import useStore from '@/store';
 
 const baseURL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000/api';
 
@@ -13,7 +13,7 @@ export const apiClient = axios.create({
 // Request interceptor for API calls
 apiClient.interceptors.request.use(
   (config) => {
-    const token = useAuthStore.getState().token;
+    const token = useStore.getState().authDetails.token;
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -38,16 +38,22 @@ apiClient.interceptors.response.use(
         // Try to refresh the token
         const response = await apiClient.post('/auth/refresh');
         if (response.data.data.token) {
-          const currentUser = useAuthStore.getState().user;
-          if (currentUser) {
-            useAuthStore.getState().setAuth(currentUser, response.data.data.token);
+          const currentAuth = useStore.getState().authDetails;
+          if (currentAuth) {
+            useStore.getState().setPartialAuthDetails({ token: response.data.data.token });
           }
           // Retry the original request
           return apiClient(originalRequest);
         }
       } catch (refreshError) {
         // If refresh fails, clear auth and redirect to login
-        useAuthStore.getState().clearAuth();
+        useStore.getState().setAuthDetails({
+          email: '',
+          first_name: '',
+          last_name: '',
+          token: ''
+        });
+        useStore.getState().setLoggedIn(false);
         window.location.href = '/auth/login';
       }
     }

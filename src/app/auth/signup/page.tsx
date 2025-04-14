@@ -16,6 +16,7 @@ export default function SignUpPage() {
     password: string;
     first_name: string;
     last_name: string;
+    confirm_password:string;
   }) => {
     try {
       await register(formData);
