@@ -49,11 +49,11 @@ const IntroScreens: React.FC = () => {
       img.src = screen.illustration
     })
 
-  //   const seen = localStorage.getItem('hasSeenIntro')
-  //   if (seen) {
-  //     router.push('/login') // or skip to signup if needed
-  //   }
-  // }, [])
+    // const seen = localStorage.getItem('hasSeenIntro')
+    // if (seen) {
+    //   router.push('/login') // or skip to signup if needed
+    // }
+  }, [])
 
   const handleNext = () => {
     if (currentScreen < screens.length - 1) {
