@@ -35,7 +35,7 @@ export default function SignUpPage() {
       >
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2 dark:text-white">Create Account</h1>
-        <p className="text-gray-600 dark:text-gray-300">
+        <p className="text-gray-600 dark:text-gray-300 text-sm">
           Join Tandem to start organizing your tasks and events
         </p>
       </div>

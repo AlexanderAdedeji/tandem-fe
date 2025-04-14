@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
+import Image from "next/image";
+
 const SplashScreen: React.FC = () => {
   const [showLogo, setShowLogo] = useState(false);
   const router = useRouter();
@@ -31,10 +33,13 @@ const SplashScreen: React.FC = () => {
         }}
         className="flex flex-col items-center"
       >
-        <img
-          src="https://uploadthingy.s3.us-west-1.amazonaws.com/kdwuUh6GeyaD4fqwCFMYaP/Tandem.png"
+        <Image
+           src= '/splash-screen.png'
           alt="Tandem Logo"
-          className="w-40 h-40 object-contain mb-6"
+          width={160}
+          height={160}
+          className="object-contain mb-6"
+          priority
         />
         <motion.h1
           className="text-white text-3xl font-bold"

@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
@@ -65,7 +67,7 @@ const listTypes = [
     color: 'text-violet-500',
   },
 ]
-export const CreateList: React.FC = () => {
+const CreateList: React.FC = () => {
   const router = useRouter()
   const { addList } = useList()
   const [selectedType, setSelectedType] = useState<string | null>(null)
@@ -219,3 +221,7 @@ export const CreateList: React.FC = () => {
     </div>
   )
 }
+
+
+
+export default CreateList

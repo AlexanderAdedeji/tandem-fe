@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
   // Filter out archived lists
   const activeLists = lists.filter((list) => !list.archived)
   const handleCreateList = () => {
-    router.push('/create-list')
+    router.push('/lists')
   }
   return (
     <div className="min-h-screen bg-[#F7F8FA] dark:bg-[#1A1B25] pb-20">

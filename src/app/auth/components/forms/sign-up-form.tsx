@@ -1,38 +1,41 @@
-"use client"
+"use client";
 
-import React from "react"
-import { motion } from "framer-motion"
-import { useRouter } from "next/navigation"
-import { useForm } from "react-hook-form"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import Link from "next/link"
-import OauthForm from "../oauth-form"
+import React from "react";
+import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Link from "next/link";
+import OauthForm from "../oauth-form";
 
 interface SignUpFormData {
-  fullName: string
-  email: string
-  password: string
+  fullName: string;
+  email: string;
+  password: string;
 }
 
- function SignUpForm() {
-  const router = useRouter()
+function SignUpForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<SignUpFormData>()
+  } = useForm<SignUpFormData>();
 
+  const handleNavigate = (route: string) => {
+    router.push(route);
+  };
   const onSubmit = async (data: SignUpFormData) => {
     try {
       // Handle signup logic here
-      console.log(data)
-      router.push("/auth/login")
+      console.log(data);
+      handleNavigate("/auth/login");
     } catch (error) {
-      console.error("Signup failed:", error)
+      console.error("Signup failed:", error);
     }
-  }
+  };
 
   return (
     <motion.div
@@ -41,8 +44,6 @@ interface SignUpFormData {
       transition={{ duration: 0.5 }}
       className="w-full"
     >
-
-
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
         <div className="space-y-2">
           <Label htmlFor="fullName">Full Name</Label>
@@ -95,30 +96,23 @@ interface SignUpFormData {
           )}
         </div>
 
-        <Button
-          type="submit"
-          className="w-full"
-          disabled={isSubmitting}
-        >
+        <Button type="submit" className="w-full" disabled={isSubmitting}>
           {isSubmitting ? "Creating account..." : "Sign Up"}
         </Button>
 
-
-<OauthForm/>
+        <OauthForm />
         <p className="text-center text-gray-600 dark:text-gray-300">
           Already have an account?{" "}
-          <Link
-            href="/auth/login"
+          <span
+            onClick={() => handleNavigate("/auth/login")}
             className="text-primary hover:underline font-medium"
           >
             Log in
-          </Link>
+          </span>
         </p>
       </form>
     </motion.div>
-  )
+  );
 }
 
-
-
-export default SignUpForm
+export default SignUpForm;
