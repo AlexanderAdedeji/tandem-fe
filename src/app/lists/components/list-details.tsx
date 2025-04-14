@@ -374,7 +374,7 @@ export const ListDetail: React.FC<ListDetailProps> = ({ listId }) => {
           {showMenu && (
             <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-[#2B2C5D] rounded-lg shadow-lg overflow-hidden z-10">
               <button
-                onClick={() => router.push(`/list/${listId}/invite`)}
+                onClick={() => router.push(`/lists/${listId}/invite-collaborators`)}
                 className="w-full flex items-center p-3 text-left hover:bg-gray-100 dark:hover:bg-gray-800"
               >
                 <Users

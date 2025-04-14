@@ -14,7 +14,7 @@ import {
   Copy,
   X,
 } from 'lucide-react'
-import { useList } from '../lists/context/list-context'
+import { useList } from '../../context/list-context'
 
 type Role = 'editor' | 'viewer' | 'admin'
 interface Collaborator {
@@ -27,7 +27,9 @@ const InviteCollaborators: React.FC = () => {
     const id = params?.id as string
 
   const { getListById, updateListCollaborators } = useList()
+
   const list = getListById(id || '')
+  console.log(list)
   const [email, setEmail] = useState('')
   const [collaborators, setCollaborators] = useState<Collaborator[]>([])
   const [showCopiedToast, setShowCopiedToast] = useState(false)
@@ -70,10 +72,14 @@ const InviteCollaborators: React.FC = () => {
     if (id && list) {
       updateListCollaborators(id, collaborators.length)
     }
-    router.push(`/list/${id}`)
+
+    if (id) {
+      updateListCollaborators(id, collaborators.length)
+    }
+    router.push(`/lists/${id}`)
   }
   const handleSkip = () => {
-    router.push(`/list/${id}`)
+    router.push(`/lists/${id}`)
   }
   const getRoleColor = (role: Role) => {
     switch (role) {
@@ -85,10 +91,10 @@ const InviteCollaborators: React.FC = () => {
         return 'text-red-500 bg-red-100 dark:bg-red-900'
     }
   }
-  if (!list) {
-    router.push('/dashboard')
-    return null
-  }
+  // if (!list) {
+  //   router.push('/dashboard')
+  //   return null
+  // }
   return (
     <div className="min-h-screen bg-[#F7F8FA] dark:bg-[#1A1B25]">
       <header className="p-6 flex items-center">
@@ -99,7 +105,7 @@ const InviteCollaborators: React.FC = () => {
           <ArrowLeft size={20} className="text-[#2E2E2E] dark:text-[#E9E9E9]" />
         </button>
         <h1 className="text-xl font-bold text-[#2E2E2E] dark:text-[#E9E9E9]">
-          Invite to "{list.title}"
+          Invite to {"list.title"}
         </h1>
       </header>
       <div className="p-6">
@@ -180,7 +186,7 @@ const InviteCollaborators: React.FC = () => {
               className="w-full flex items-center justify-between p-4 bg-white dark:bg-[#2B2C5D] rounded-lg"
             >
               <span className="text-[#666] dark:text-[#AAA] truncate mr-2">
-                https://tandem.app/list/{id}
+                https://tandem.app/lists/{id}
               </span>
               <Copy size={18} className="text-[#5855FF] dark:text-[#FF914D]" />
             </button>
