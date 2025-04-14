@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import QueryProvider from "@/components/QueryProvider";
 import { ListProvider } from "./lists/context/list-context";
 import { AIProvider } from "@/shared/context/ai-context";
+import { CalendarProvider } from "@/shared/context/calendar-context";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -39,11 +40,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-
-          <AIProvider>
-          <ListProvider>{children}</ListProvider>
-          </AIProvider>
-       
+          <CalendarProvider>
+            <AIProvider>
+              <ListProvider>{children}</ListProvider>
+            </AIProvider>
+          </CalendarProvider>
 
           {/* <InstallPrompt /> */}
         </QueryProvider>
