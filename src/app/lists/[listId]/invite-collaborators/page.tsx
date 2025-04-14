@@ -23,9 +23,9 @@ interface Collaborator {
 }
 const InviteCollaborators: React.FC = () => {
     const router = useRouter()
-    const params = useParams()
-    const id = params?.id as string
-
+    // const params = useParams()
+    // const id = params?.id as string
+const id =''
   const { getListById, updateListCollaborators } = useList()
 
   const list = getListById(id || '')
