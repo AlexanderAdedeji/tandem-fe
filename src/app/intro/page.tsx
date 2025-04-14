@@ -53,7 +53,7 @@ const IntroScreens: React.FC = () => {
     if (seen) {
       router.push('/login') // or skip to signup if needed
     }
-  }, [router])
+  }, [])
 
   const handleNext = () => {
     if (currentScreen < screens.length - 1) {
