@@ -1,14 +1,15 @@
-import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Archive, RotateCcw, Trash2, AlertCircle } from 'lucide-react'
-import { useThemeCustomization } from '../../context/ThemeCustomizationContext'
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Archive, RotateCcw, Trash2, AlertCircle } from "lucide-react";
 
-import { useNavigate } from 'react-router-dom'
-import { useList } from '@/app/lists/context/list-context'
+
+import { useList } from "@/app/lists/context/list-context";
+import { useThemeCustomization } from "@/shared/context/ThemeCustomisationContext";
+import { useRouter } from "next/navigation";
 interface DeleteConfirmationProps {
-  onConfirm: () => void
-  onCancel: () => void
-  listTitle: string
+  onConfirm: () => void;
+  onCancel: () => void;
+  listTitle: string;
 }
 const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
   onConfirm,
@@ -66,31 +67,31 @@ const DeleteConfirmation: React.FC<DeleteConfirmationProps> = ({
         </div>
       </motion.div>
     </motion.div>
-  )
-}
+  );
+};
 export const ArchivedLists: React.FC = () => {
-  const { colors } = useThemeCustomization()
-  const { getArchivedLists, unarchiveList, deleteList } = useList()
-  const navigate = useNavigate()
+  const { colors } = useThemeCustomization();
+  const { getArchivedLists, unarchiveList, deleteList } = useList();
+  const router = useRouter();
   const [deleteConfirmation, setDeleteConfirmation] = useState<{
-    id: string
-    title: string
-  } | null>(null)
-  const archivedLists = getArchivedLists()
+    id: string;
+    title: string;
+  } | null>(null);
+  const archivedLists = getArchivedLists();
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    })
-  }
+    return new Date(date).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  };
   const handleUnarchive = (id: string) => {
-    unarchiveList(id)
-  }
+    unarchiveList(id);
+  };
   const handleDelete = (id: string) => {
-    deleteList(id)
-    setDeleteConfirmation(null)
-  }
+    deleteList(id);
+    setDeleteConfirmation(null);
+  };
   return (
     <div className="space-y-4">
       <h3 className="text-lg font-semibold text-[#2E2E2E] dark:text-[#E9E9E9] flex items-center">
@@ -123,13 +124,13 @@ export const ArchivedLists: React.FC = () => {
           <div className="flex items-center justify-between">
             <div
               className="flex-1 cursor-pointer"
-              onClick={() => navigate(`/list/${list.id}`)}
+              onClick={() => router.push(`/list/${list.id}`)}
             >
               <h4 className="font-medium text-[#2E2E2E] dark:text-[#E9E9E9]">
                 {list.title}
               </h4>
               <p className="text-sm text-[#666] dark:text-[#AAA]">
-                Archived on {formatDate(list.archivedAt || '')}
+                Archived on {formatDate(list.archivedAt || "")}
               </p>
             </div>
             <div className="flex items-center space-x-2">
@@ -172,5 +173,5 @@ export const ArchivedLists: React.FC = () => {
         )}
       </AnimatePresence>
     </div>
-  )
-}
+  );
+};

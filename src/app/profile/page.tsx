@@ -1,15 +1,20 @@
+'use client'
+
+
+
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowLeft, Moon, Palette, Archive, User, Bell } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+
 import { useThemeCustomization } from "@/shared/context/ThemeCustomisationContext";
 import { useAchievements } from "../achievements/context/AchievementContext";
 import { AchievementBadge } from "../achievements/components/AchiebementBadge";
 import { ArchivedLists } from "./components/ArchivedLists";
 import ColorPaletteSelector from "./components/ColorPalleteSelector";
+import { useRouter } from "next/navigation";
 
 const Profile: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isDarkMode, toggleTheme, colors } = useThemeCustomization();
   const { achievements, currentStreak, unlockedAchievements } =
     useAchievements();
@@ -19,7 +24,7 @@ const Profile: React.FC = () => {
       <header className="p-6 flex items-center justify-between">
         <div className="flex items-center">
           <button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => router.push("/dashboard")}
             className="p-2 rounded-full bg-gray-100 dark:bg-gray-800 mr-4"
           >
             <ArrowLeft

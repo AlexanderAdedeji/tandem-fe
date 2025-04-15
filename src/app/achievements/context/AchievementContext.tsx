@@ -1,3 +1,6 @@
+'use client'
+
+
 import React, { useEffect, useState, createContext, useContext } from 'react'
 export interface Achievement {
   id: string
@@ -17,7 +20,7 @@ interface AchievementsContextType {
   incrementStreak: () => void
   resetStreak: () => void
 }
-const AchievementsContext = createContext<AchievementsContextType>({
+const AchievementsContext = React.createContext<AchievementsContextType>({
   achievements: [],
   unlockedAchievements: [],
   currentStreak: 0,
@@ -25,7 +28,7 @@ const AchievementsContext = createContext<AchievementsContextType>({
   incrementStreak: () => {},
   resetStreak: () => {},
 })
-export const useAchievements = () => useContext(AchievementsContext)
+export const useAchievements = () => React.useContext(AchievementsContext)
 const defaultAchievements: Achievement[] = [
   {
     id: 'first-list',

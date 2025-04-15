@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, Check, Edit2, Plus, Trash2 } from 'lucide-react'
 import { HexColorPicker } from 'react-colorful'
-import { useThemeCustomization } from '../../context/ThemeCustomizationContext'
+import { useThemeCustomization } from '@/shared/context/ThemeCustomisationContext'
 interface ColorEditModalProps {
   color: string
   label: string
