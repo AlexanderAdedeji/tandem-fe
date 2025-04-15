@@ -7,6 +7,7 @@ import { useList } from '@/app/lists/context/list-context'
 export interface CalendarEvent {
   id: string
   title: string
+  isAllDay?:boolean
   description?: string
   start: string
   end: string

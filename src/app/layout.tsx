@@ -7,6 +7,7 @@ import QueryProvider from "@/components/QueryProvider";
 import { ListProvider } from "./lists/context/list-context";
 import { AIProvider } from "@/shared/context/ai-context";
 import { CalendarProvider } from "@/shared/context/calendar-context";
+import { AchievementsProvider } from "./achievements/context/AchievementContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -40,11 +41,15 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
+
+          <AchievementsProvider>
           <CalendarProvider>
             <AIProvider>
               <ListProvider>{children}</ListProvider>
             </AIProvider>
           </CalendarProvider>
+          </AchievementsProvider>
+
 
           {/* <InstallPrompt /> */}
         </QueryProvider>

@@ -27,7 +27,7 @@ const listTypes = [
     color: 'text-green-500',
   },
   {
-    id: 'tasks',
+    id: 'task',
     title: 'Task List',
     description: 'Organize your tasks and track your progress',
     icon: CheckSquare,
