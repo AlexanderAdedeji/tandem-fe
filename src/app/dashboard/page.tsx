@@ -9,7 +9,7 @@ import { BottomNavigation } from './components/BottomNavigation'
 import { useList } from '../lists/context/list-context'
 import { EmptyState } from '@/shared/hoc/WithEmptyState'
 import { ListCard } from '../lists/components/list-card'
-import { RecommendationSection } from './components/recommendation-section'
+import { RecommendationSection } from './components/AiSuggestions'
 import { useRouter } from 'next/navigation'
 const Dashboard: React.FC = () => {
   const router = useRouter()

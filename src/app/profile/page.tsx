@@ -12,6 +12,7 @@ import { AchievementBadge } from "../achievements/components/AchiebementBadge";
 import { ArchivedLists } from "./components/ArchivedLists";
 import ColorPaletteSelector from "./components/ColorPalleteSelector";
 import { useRouter } from "next/navigation";
+import { ArchivedListScreen } from "./components/ArchivedListScreen";
 
 const Profile: React.FC = () => {
   const router = useRouter();
@@ -167,7 +168,7 @@ const Profile: React.FC = () => {
               </span>
             </div>
           </button>
-          <button className="w-full flex items-center justify-between p-4">
+          <button className="w-full flex items-center justify-between p-4" onClick={()=>router.push('/settings')}>
             <div className="flex items-center">
               <User
                 size={20}
@@ -182,7 +183,8 @@ const Profile: React.FC = () => {
             </div>
           </button>
         </div>
-        <ArchivedLists />
+        {/* <ArchivedLists /> */}
+        <ArchivedListScreen/>
       </div>
       {showPaletteSelector && (
         <ColorPaletteSelector onClose={() => setShowPaletteSelector(false)} />
