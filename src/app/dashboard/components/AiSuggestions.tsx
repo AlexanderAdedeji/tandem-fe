@@ -9,7 +9,8 @@ import {
   TrendingUp,
   Users,
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+
 interface Suggestion {
   type: 'task' | 'event' | 'shopping' | 'goal'
   title: string
@@ -19,7 +20,7 @@ interface Suggestion {
   color: string
 }
 export const AISuggestions: React.FC = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const suggestions: Suggestion[] = [
     {
       type: 'task',
@@ -50,13 +51,13 @@ export const AISuggestions: React.FC = () => {
   const handleAction = (type: string) => {
     switch (type) {
       case 'task':
-        navigate('/create-list?type=tasks')
+        router.push('/create-list?type=tasks')
         break
       case 'event':
-        navigate('/calendar')
+        router.push('/calendar')
         break
       case 'shopping':
-        navigate('/create-list?type=grocery')
+        router.push('/create-list?type=grocery')
         break
       default:
         break

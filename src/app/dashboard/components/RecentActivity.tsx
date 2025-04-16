@@ -1,12 +1,13 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Clock, ArrowRight } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+
 interface RecentActivityProps {
   lists: any[]
 }
 export const RecentActivity: React.FC<RecentActivityProps> = ({ lists }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const recentLists = lists.slice(0, 3)
   return (
     <div>
@@ -31,7 +32,7 @@ export const RecentActivity: React.FC<RecentActivityProps> = ({ lists }) => {
             whileHover={{
               scale: 1.01,
             }}
-            onClick={() => navigate(`/list/${list.id}`)}
+            onClick={() => router.push(`/list/${list.id}`)}
             className="bg-white dark:bg-[#2B2C5D] p-4 rounded-xl cursor-pointer"
           >
             <div className="flex items-center justify-between">

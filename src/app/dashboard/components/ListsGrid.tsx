@@ -1,13 +1,14 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+
 import { List } from '@/shared/model'
+import { useRouter } from 'next/navigation'
 
 interface ListsGridProps {
   lists: List[]
 }
 export const ListsGrid: React.FC<ListsGridProps> = ({ lists }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
   if (lists.length === 0) {
     return (
       <motion.div
@@ -62,7 +63,7 @@ export const ListsGrid: React.FC<ListsGridProps> = ({ lists }) => {
           transition={{
             delay: index * 0.1,
           }}
-          onClick={() => navigate(`/list/${list.id}`)}
+          onClick={() => router.push(`/list/${list.id}`)}
           className="bg-white dark:bg-[#2B2C5D] p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer"
         >
           <div className="flex items-center justify-between mb-2">

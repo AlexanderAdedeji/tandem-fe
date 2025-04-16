@@ -15,7 +15,7 @@ import {
   Receipt,
   X,
 } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+
 import { useList } from '@/app/lists/context/list-context'
 import { ListType } from '@/shared/model'
 import { useRouter } from 'next/navigation'

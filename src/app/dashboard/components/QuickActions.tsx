@@ -1,33 +1,34 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { ShoppingCart, CheckSquare, Calendar, Target, Plus } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+
 export const QuickActions: React.FC = () => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const actions = [
     {
       icon: <ShoppingCart className="w-6 h-6" />,
       label: 'Shopping List',
       color: 'bg-green-500',
-      onClick: () => navigate('/create-list?type=grocery'),
+      onClick: () => router.push('/create-list?type=grocery'),
     },
     {
       icon: <CheckSquare className="w-6 h-6" />,
       label: 'Task List',
       color: 'bg-blue-500',
-      onClick: () => navigate('/create-list?type=tasks'),
+      onClick: () => router.push('/create-list?type=tasks'),
     },
     {
       icon: <Calendar className="w-6 h-6" />,
       label: 'New Event',
       color: 'bg-purple-500',
-      onClick: () => navigate('/calendar'),
+      onClick: () => router.push('/calendar'),
     },
     {
       icon: <Target className="w-6 h-6" />,
       label: 'Set Goal',
       color: 'bg-orange-500',
-      onClick: () => navigate('/create-list?type=goal'),
+      onClick: () => router.push('/create-list?type=goal'),
     },
   ]
   return (

@@ -1,7 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { Calendar, Clock, ArrowRight } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation'
+
 interface Collaborator {
   name: string
   avatar: string
@@ -17,7 +18,7 @@ interface ListCardProps {
   }
 }
 export const ListCard: React.FC<ListCardProps> = ({ list }) => {
-  const navigate = useNavigate()
+  const router = useRouter()
   const getGradient = (type: string) => {
     switch (type) {
       case 'grocery':
@@ -57,7 +58,7 @@ export const ListCard: React.FC<ListCardProps> = ({ list }) => {
       whileHover={{
         y: -4,
       }}
-      onClick={() => navigate(`/list/${list.id}`)}
+      onClick={() => router.push(`/list/${list.id}`)}
       className={`bg-gradient-to-br ${getGradient(list.type)} rounded-xl p-6 cursor-pointer relative group border border-gray-100 dark:border-gray-700/50`}
     >
       <div className="flex items-start justify-between mb-6">
