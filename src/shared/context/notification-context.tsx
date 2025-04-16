@@ -37,7 +37,7 @@ interface NotificationContextType {
     notification: Omit<Notification, 'id' | 'timestamp' | 'read'>,
   ) => void
 }
-const NotificationContext = createContext<NotificationContextType>({
+const NotificationContext = React.createContext<NotificationContextType>({
   notifications: [],
   preferences: [],
   unreadCount: 0,
@@ -47,7 +47,7 @@ const NotificationContext = createContext<NotificationContextType>({
   clearAll: () => {},
   addNotification: () => {},
 })
-export const useNotifications = () => useContext(NotificationContext)
+export const useNotifications = () => React.useContext(NotificationContext)
 const defaultPreferences: NotificationPreference[] = [
   {
     type: 'list_update',

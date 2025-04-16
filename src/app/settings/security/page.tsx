@@ -1,7 +1,10 @@
+'use client'
+
+
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Lock, Shield, Smartphone, Key, CheckCircle } from 'lucide-react'
-export const SecuritySection: React.FC = () => {
+const SecuritySection: React.FC = () => {
   const [showPasswordForm, setShowPasswordForm] = useState(false)
   const [is2FAEnabled, setIs2FAEnabled] = useState(false)
   const [showQRCode, setShowQRCode] = useState(false)
@@ -203,3 +206,6 @@ export const SecuritySection: React.FC = () => {
     </div>
   )
 }
+
+
+export default SecuritySection

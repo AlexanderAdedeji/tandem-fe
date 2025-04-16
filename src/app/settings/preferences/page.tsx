@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import { Settings, Globe, Calendar, Clock } from 'lucide-react'
-export const PreferencesSection: React.FC = () => {
+const PreferencesSection: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between mb-6">
@@ -79,3 +81,6 @@ export const PreferencesSection: React.FC = () => {
     </div>
   )
 }
+
+
+export default PreferencesSection

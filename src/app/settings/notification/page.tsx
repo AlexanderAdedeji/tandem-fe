@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import {
   Bell,
@@ -9,7 +11,7 @@ import {
   Trophy,
   Calendar,
 } from 'lucide-react'
-import { NotificationType, useNotifications } from '@/shared/context/notification-context'
+import { NotificationChannel, NotificationType, useNotifications } from '@/shared/context/notification-context'
 
 const notificationTypes: {
   type: NotificationType
@@ -54,7 +56,11 @@ const notificationTypes: {
     description: 'Important system notifications',
   },
 ]
-const channels = [
+const channels:{
+    id:NotificationChannel,
+    icon:any
+    label:string
+}[] = [
   {
     id: 'push',
     icon: Bell,
@@ -71,7 +77,7 @@ const channels = [
     label: 'In-App',
   },
 ]
-export const NotificationSection: React.FC = () => {
+ const NotificationSection: React.FC = () => {
   const { preferences, updatePreference } = useNotifications()
   return (
     <div className="space-y-8">
@@ -180,3 +186,7 @@ export const NotificationSection: React.FC = () => {
     </div>
   )
 }
+
+
+
+export default NotificationSection

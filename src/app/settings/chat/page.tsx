@@ -1,6 +1,8 @@
+'use client'
+
 import React from 'react'
 import { MessageSquare, Volume2, Bell, Clock } from 'lucide-react'
-export const ChatSection: React.FC = () => {
+const ChatSection: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between mb-6">
@@ -78,3 +80,6 @@ export const ChatSection: React.FC = () => {
     </div>
   )
 }
+
+
+export default ChatSection

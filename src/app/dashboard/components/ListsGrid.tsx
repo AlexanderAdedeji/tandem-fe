@@ -1,7 +1,8 @@
 import React from 'react'
 import { motion } from 'framer-motion'
 import { useNavigate } from 'react-router-dom'
-import { List } from '../../types'
+import { List } from '@/shared/model'
+
 interface ListsGridProps {
   lists: List[]
 }

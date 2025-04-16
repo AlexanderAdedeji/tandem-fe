@@ -4,7 +4,7 @@ import { Award } from 'lucide-react'
 import { useAchievements } from '@/app/achievements/context/AchievementContext'
 export const AchievementsSection: React.FC = () => {
   const { achievements } = useAchievements()
-  const recentAchievements = achievements.filter((a) => a.unlocked).slice(0, 3)
+  const recentAchievements = achievements.filter((a) => a.unlockedAt).slice(0, 3)
   if (recentAchievements.length === 0) return null
   return (
     <div>
